@@ -46,7 +46,7 @@ export default function App() {
       </SafeAreaView>
       <Text style={estilos.tituloFinal}>Chamada para ação</Text>
       <View style={estilos.campoComprar}>
-        <Text style={estilos.textoComprar}>Adquira um novo curso e continue aprendendo!</Text> 
+        <Text style={estilos.textoComprar}>Adquira um novo curso e continue aprendendo!</Text>
         <View style={estilos.botaoComprar}>
           <Text style={estilos.textoBotao}>COMPRAR CURSO</Text>
         </View>
@@ -58,6 +58,7 @@ export default function App() {
 const estilos = StyleSheet.create({
 
   tela: {
+
     flex: 1,
     top: 35,
     padding: 20,
@@ -66,14 +67,15 @@ const estilos = StyleSheet.create({
   },
 
   telaSafeArea: {
+
     flex: 1,
     marginTop: 10,
     maxHeight: 280,
     justifyContent: "space-between"
-
   },
 
   cabecalho: {
+
     fontWeight: "800",
     fontSize: 30,
     marginTop: 20,
@@ -88,6 +90,7 @@ const estilos = StyleSheet.create({
   },
 
   fotoPerfil: {
+
     position: 'absolute',
     left: 20,
     top: 40,
@@ -98,13 +101,14 @@ const estilos = StyleSheet.create({
   },
 
   tituloMenu: {
+
     fontWeight: "800",
     fontSize: 20,
     marginTop: 30,
-
   },
 
   containerMenu: {
+
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
@@ -121,13 +125,11 @@ const estilos = StyleSheet.create({
   },
 
   textoNotas: {
+
     fontSize: 20,
     color: "white",
     fontWeight: 800
-
-
   },
-
 
   menuAulas: {
 
@@ -137,15 +139,13 @@ const estilos = StyleSheet.create({
     backgroundColor: "#1cac1cff",
     justifyContent: "center",
     alignItems: "center"
-
   },
 
   textoAulas: {
+
     fontSize: 20,
     color: "white",
     fontWeight: 800
-
-
   },
 
   menuAvisos: {
@@ -159,18 +159,17 @@ const estilos = StyleSheet.create({
   },
 
   textoAvisos: {
+
     fontSize: 20,
     color: "white",
     fontWeight: 800
-
-
   },
 
   tituloAtividades: {
+
     fontWeight: "800",
     fontSize: 20,
     marginTop: 30,
-
   },
 
   atividades: {
@@ -183,54 +182,51 @@ const estilos = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10,
     justifyContent: "space-between",
-
   },
 
   textoAtividades: {
+
     fontSize: 16,
     fontWeight: 800,
     marginLeft: 20,
     marginTop: 15,
-
-
   },
 
   textoObservacao: {
+
     fontSize: 16,
     opacity: 0.5,
     marginLeft: 20,
     marginBottom: 15,
-
   },
 
   tituloFinal: {
+
     marginTop: 10,
     fontWeight: "800",
     fontSize: 20,
   },
 
   campoComprar: {
+
     marginTop: 10,
     width: "100%",
     height: 160,
     borderRadius: 15,
     borderWidth: 2,
     borderColor: "#cececeff",
-    alignItems:"center"
-
+    alignItems: "center"
   },
-  
-  textoComprar: {
-fontSize: 16,
-   
-    marginTop: 40
 
-  
+  textoComprar: {
+
+    fontSize: 16,
+    marginTop: 40
   },
 
   botaoComprar: {
 
-    width:150,
+    width: 150,
     height: 40,
     backgroundColor: "#d612c6ff",
     marginTop: 20,
@@ -240,11 +236,10 @@ fontSize: 16,
   },
 
   textoBotao: {
-fontSize: 15,
-color: "white",
-fontWeight: 800,
 
-
+    fontSize: 15,
+    color: "white",
+    fontWeight: 800,
   }
 
 
