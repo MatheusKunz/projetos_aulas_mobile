@@ -4,12 +4,10 @@ import { SafeAreaView } from "react-native";
 export default function App() {
   return (
     <SafeAreaView style={estilos.areaSegura}>
-
       <View style={estilos.cabecalho}>
         <Text style={estilos.titulo}>Quadro de tarefas</Text>
         <Text style={estilos.subTitulo}>Kanban estático</Text>
       </View>
-
       <Text style={estilos.menu}>Quadro</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={estilos.grupoQuadros}>
@@ -50,18 +48,15 @@ export default function App() {
             </View>
           </View>
         </View>
-
       </ScrollView>
       <View style={estilos.Botoes}>
         <TouchableOpacity style={estilos.botao1}>
           <Text style={estilos.textoBotao}>ADICIONAR</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={estilos.botao2}>
           <Text style={estilos.textoBotao}>FILTRAR</Text>
         </TouchableOpacity>
       </View>
-
     </SafeAreaView>
   );
 }
@@ -122,7 +117,6 @@ const estilos = StyleSheet.create({
     width: "90%",
     height: 55,
     backgroundColor: "#ffffffff",
-
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "#e4e4e4ff",
