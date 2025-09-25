@@ -4,56 +4,56 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabaseSync('tarefas.db');
+const db = SQLite.openDatabaseSync('despesas.db');
 db.execSync(`
   PRAGMA journal_mode = WAL;
-  CREATE TABLE IF NOT EXISTS tarefas (
+  CREATE TABLE IF NOT EXISTS despesas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL
   );
 `);
 
-function getTarefas(){
-  return db.getAllSync('SELECT * FROM TAREFAS');
+function getDespesas(){
+  return db.getAllSync('SELECT * FROM despesas');
 }
 
-function insertTarefa(nome){
-  db.runSync('INSERT INTO tarefas (nome) VALUES (?)', [nome]);
+function insertDespesas(nome){
+  db.runSync('INSERT INTO despesas (nome) VALUES (?)', [nome]);
 }
 
 export default function sqlite() {
   const [texto, setTexto] = useState("");
-  const [tarefas, setTarefas] = useState([]);
+  const [despesas, setDespesas] = useState([]);
 
-  function salvarTarefa() {
+  function salvarDespesas() {
     const nome = texto.trim();
     if (!nome) return;
-    insertTarefa(nome);
+    insertDespesas(nome);
     setTexto("");
   }
 
-  function carregarTarefas() {
-    setTarefas(getTarefas());
+  function carregarDespesas() {
+    setDespesas(getDespesas());
   }
 
   return (
     <SafeAreaView style={estilos.container}>
-      <Text style={estilos.titulo}>Tarefas</Text>
+      <Text style={estilos.titulo}>Despesas</Text>
 
       <View style={estilos.linhaEntrada}>
         <TextInput
           value={texto}
           onChangeText={setTexto}
-          placeholder="Nova tarefa..."
+          placeholder="Nova despesa..."
           style={estilos.campoTexto}
         />
-        <Button title="Salvar" onPress={salvarTarefa} />
+        <Button title="Salvar" onPress={salvarDespesas} />
       </View>
 
-      <Button title="Carregar tarefas" onPress={carregarTarefas} />
+      <Button title="Carregar despesas" onPress={carregarDespesas} />
 
       <FlatList
-        data={tarefas}
+        data={despesas}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => 
         <Text style={estilos.textoItem}>
