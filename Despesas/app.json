@@ -1,0 +1,8 @@
+{
+  "name": "Despesas",
+  "slug": "Despesas",
+    "plugins": [
+    "expo-router"
+  ],
+  "scheme": "your-app-scheme"
+}
