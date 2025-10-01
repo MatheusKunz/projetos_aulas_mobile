@@ -1,0 +1,11 @@
+{
+  "name": "Exercicios",
+  "slug": "Exercicios",
+  "expo": {
+    "plugins": [
+      "expo-router",
+      "expo-sqlite"
+    ],
+    "scheme": "your-app-scheme"
+  }
+}
