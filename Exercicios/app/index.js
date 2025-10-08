@@ -1,33 +1,51 @@
-import { useState } from "react";
-import { Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Home() {
-  const [count, setCount] = useState(0);
-
+export default function Index() {
   return (
-    <SafeAreaView style={estilos.telaInicial}>
-      <Text style={{ fontSize: 18 }}>Seja bem-vindo!</Text>
+    <SafeAreaView style={estilos.container}>
+      <View style={estilos.header}>
+        <Text style={estilos.titulo}> Bem-vindo!</Text>
+        <Text style={estilos.subtitulo}>
+          Gerencie suas atividades físicas de forma simples
+        </Text>
+      </View>
 
-      <Link href="/exercicio" asChild>
-        <Button title="Ver exercícios" />
-      </Link>
+      <View style={estilos.botaoContainer}>
+        <Link href="/telaInicial" asChild>
+          <Button title=" Ir para Tela Inicial" color="#4CAF50" />
+        </Link>
+      </View>
     </SafeAreaView>
   );
-
-
 }
 
- const estilos = StyleSheet.create({
-    telaInicial: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 12
-    },
-
-    titulo: {
-      fontSize: 18
-    }
-  });
+const estilos = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  header: {
+    marginBottom: 40,
+    alignItems: "center",
+  },
+  titulo: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 8,
+  },
+  subtitulo: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+  },
+  botaoContainer: {
+    width: "80%",
+    marginTop: 20,
+  },
+});
