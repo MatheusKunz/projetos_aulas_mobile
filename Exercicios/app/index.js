@@ -13,8 +13,8 @@ export default function Index() {
       </View>
 
       <View style={estilos.botaoContainer}>
-        <Link href="/telaInicial" asChild>
-          <Button title=" Ir para Tela Inicial" color="#4CAF50" />
+        <Link href="/exercicios" asChild>
+          <Button title=" Ir para Exercícios" color="#4CAF50" />
         </Link>
       </View>
     </SafeAreaView>

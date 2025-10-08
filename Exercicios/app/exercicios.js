@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Button, TextInput, FlatList, Alert } from "react-native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
 import * as SQLite from 'expo-sqlite';
+import { useState, useEffect } from "react";
 
 const db = SQLite.openDatabaseSync('atividades.db');
 db.execSync(`
@@ -36,6 +36,18 @@ function deleteAtividades(id) {
   db.runSync("DELETE FROM atividades WHERE id = ?", [id])
 }
 
+function getAtividadeByid(id) {
+  const [atividade] = db.getAllSync('SELECT * FROM atividades WHERE id = ?', [id]);
+  return atividade;
+}
+
+function updateAtividades(id, atividade, duracaoMin, categoria) {
+  db.runSync('UPDATE atividades SET atividade = ?, duracaoMin = ?, categoria = ? WHERE id = ?', [
+    atividade, duracaoMin, categoria, id]
+  );
+}
+
+
 
 
 export default function Atividade() {
@@ -44,6 +56,7 @@ export default function Atividade() {
   const [duracaoMin, setDuracaomin] = useState("");
   const [categoria, setCategoria] = useState("");
   const [atividades, setAtividades] = useState([]);
+  const [editandoId, setEditandoId] = useState(null);
 
   function Salvar() {
     if (!atividade.trim() || !duracaoMin.trim() || !categoria.trim()) return;
@@ -51,6 +64,26 @@ export default function Atividade() {
     setAtividade("");
     setDuracaomin("");
     setCategoria("");
+    carregarAtividades();
+  }
+
+  function editarAtividade(id) {
+    const atividade = getAtividadeByid(id);
+    if (!atividade) return;
+    setAtividade(atividade.atividade);
+    setDuracaomin(String(atividade.duracaoMin));
+    setCategoria(atividade.categoria);
+    setEditandoId(id);
+  }
+
+  function atualizarAtividade() {
+    const atividadeFormatada = atividade.trim();
+    if (!atividadeFormatada || !editandoId) return;
+    updateAtividades(editandoId, atividade, parseFloat(duracaoMin), categoria.trim());
+    setAtividade("");
+    setDuracaomin("");
+    setCategoria("");
+    setEditandoId(null);
     carregarAtividades();
   }
 
@@ -70,43 +103,49 @@ export default function Atividade() {
 
   }
 
+  useEffect(() => {
+  carregarAtividades();
+}, []);
+
   return (
     <SafeAreaView style={estilos.areaSegura}>
-      <View>
+      <View style={estilos.cabecalho}>
         <Text style={estilos.textoPrincipal}>Olá!</Text>
         <Text style={estilos.subtexto}>Vamos cadastrar suas Atividades físicas!</Text>
       </View>
 
-      <View style={estilos.linhaEntrada}>
-        <TextInput
-          value={atividade}
-          onChangeText={setAtividade}
-          placeholder="Atividade..."
-          placeholderTextColor="#999"
-          style={estilos.campoTexto} />
-      </View>
+      <View style={estilos.camposEntrada}>
+        <View style={estilos.linhaEntrada}>
+          <TextInput
+            value={atividade}
+            onChangeText={setAtividade}
+            placeholder="Atividade..."
+            placeholderTextColor="#999"
+            style={estilos.campoTexto} />
+        </View>
 
-      <View style={estilos.linhaEntrada}>
-        <TextInput
-          value={duracaoMin}
-          onChangeText={setDuracaomin}
-          placeholder="Tempo da atividade..."
-          keyboardType="numeric"
-          placeholderTextColor="#999"
-          style={estilos.campoTexto} />
-      </View>
+        <View style={estilos.linhaEntrada}>
+          <TextInput
+            value={duracaoMin}
+            onChangeText={setDuracaomin}
+            placeholder="Tempo da atividade..."
+            keyboardType="numeric"
+            placeholderTextColor="#999"
+            style={estilos.campoTexto} />
+        </View>
 
-      <View style={estilos.linhaEntrada}>
-        <TextInput
-          value={categoria}
-          onChangeText={setCategoria}
-          placeholder="Categoria da atividade..."
-          placeholderTextColor="#999"
-          style={estilos.campoTexto} />
+        <View style={estilos.linhaEntrada}>
+          <TextInput
+            value={categoria}
+            onChangeText={setCategoria}
+            placeholder="Categoria da atividade..."
+            placeholderTextColor="#999"
+            style={estilos.campoTexto} />
+        </View>
       </View>
-
       <View style={estilos.containerBotao}>
-        <Button title="Salvar" onPress={Salvar} />
+        <Button title="Salvar" onPress={Salvar} disabled={!!editandoId} />
+        <Button title="Atualizar" onPress={atualizarAtividade} disabled={!editandoId} />
         <Button title="Apagar todas as atividades" onPress={limparTudo} color="#F44336" />
         <Button title="Mostrar atividades cadastradas" onPress={carregarAtividades} color="#4CAF50" />
       </View>
@@ -119,7 +158,10 @@ export default function Atividade() {
             <Text style={estilos.subtexto}>
               -{item.atividade} | {item.duracaoMin} minutos | {item.categoria}
             </Text>
-            <Button title="X" color="#F44336" onPress={() => excluirAtividades(item.id)} />
+            <View style={estilos.acoesLinha}>
+              <Button title="E" color="#2e82c7ff" onPress={() => editarAtividade(item.id)} />
+              <Button title="X" color="#F44336" onPress={() => excluirAtividades(item.id)} />
+            </View>
           </View>)}
       />
 
@@ -136,8 +178,7 @@ const estilos = StyleSheet.create({
   },
 
   cabecalho: {
-    paddingHorizontal: 26,
-    paddingTop: 5,
+    paddingHorizontal: 10,
   },
 
   textoPrincipal: {
@@ -167,11 +208,10 @@ const estilos = StyleSheet.create({
   },
 
   linhaEntrada: {
-    marginTop: 15,
+
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
-    gap: 8
+
   },
 
   campoTexto: {
@@ -185,7 +225,7 @@ const estilos = StyleSheet.create({
 
   containerBotao: {
     marginTop: 10,
-    gap: 5,
+    gap: 8,
     paddingHorizontal: 10,
   },
 
@@ -197,7 +237,20 @@ const estilos = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 5
+    padding: 10,
+  },
+
+  acoesLinha: {
+    flexDirection: "row",
+    gap: 4,
+
+  },
+
+  camposEntrada: {
+    paddingHorizontal: 10,
+    gap: 8,
+    marginTop: 15,
+    marginBottom: 15,
   },
 
 })
