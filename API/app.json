@@ -1,0 +1,11 @@
+{
+  "name": "Catálogo de filmes",
+  "slug": "Catálogo de filmes",
+  "expo": {
+    "plugins": [
+      "expo-router",
+      "expo-sqlite"
+    ],
+    "scheme": "your-app-scheme"
+  }
+}
