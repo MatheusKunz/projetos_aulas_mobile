@@ -1,6 +1,6 @@
 {
-  "name": "Catálogo de filmes",
-  "slug": "Catálogo de filmes",
+  "name": "API",
+  "slug": "API",
   "expo": {
     "plugins": [
       "expo-router",

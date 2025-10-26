@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, StyleSheet, Text, TextInput, Image } from "react-native";
+import { Button, StyleSheet, Text, TextInput, Image, View } from "react-native";
 import { useState, useEffect } from "react";
 
 async function getCEP(cep) {
@@ -32,17 +32,35 @@ export default function CEP() {
       <TextInput
         value={CEPPesquisar}
         onChangeText={setCEPPesquisar}
+        placeholder="Informe o CEP"
+        placeholderTextColor="#999"
+        style={estilos.busca}
       />
-      <Button title="Pesquisar" onPress={carregarCEP} />
-      <Text>{cidade}</Text>
-      <Text>{estado}</Text>
-      <Text>{rua}</Text>
+      <Button style={estilos.botao} title="Pesquisar" onPress={carregarCEP} />
+      <View style={estilos.lista}>
+        <Text>{estado}</Text>
+        <Text>{cidade}</Text>
+        <Text>{rua}</Text>
+      </View>
     </SafeAreaView>
   );
 }
 
 const estilos = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    padding: 12,
+  },
+
+  busca: {
+    borderWidth: 1,
+    borderColor: "#020202ff",
+    borderRadius: 8,
+    marginBottom: 8
+  },
+
+  lista: {
+    marginTop: 8,
+    gap: 8
   }
 });
