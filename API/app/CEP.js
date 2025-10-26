@@ -16,14 +16,16 @@ getCEP();
 export default function CEP() {
   const [cidade, setCidade] = useState('');
   const [estado, setEstado] = useState('');
-  const [rua, setRua] = useState('');
+  const [bairro, setBairo] = useState('');
+  const [rua, setRua] = useState('')
   const [CEPPesquisar, setCEPPesquisar] = useState('');
 
   async function carregarCEP() {
     const cep = await getCEP(CEPPesquisar);
     setCidade(cep.city || 'CEP não encontrado');
     setEstado(cep.state || 'CEP não encontrado');
-    setRua(cep.neighborhood || "Não possui CEP por rua")
+    setBairo(cep.neighborhood || "Não possui CEP por bairro")
+    setRua(cep.street || "Não possui CEP por rua")
 
   }
 
@@ -40,6 +42,7 @@ export default function CEP() {
       <View style={estilos.lista}>
         <Text>{estado}</Text>
         <Text>{cidade}</Text>
+        <Text>{bairro}</Text>
         <Text>{rua}</Text>
       </View>
     </SafeAreaView>
