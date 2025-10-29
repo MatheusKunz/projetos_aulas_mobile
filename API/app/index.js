@@ -8,6 +8,9 @@ export default function Home() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: 12 }}>
       <Text style={{ fontSize: 18 }}>APIs</Text>
+      <Link href="/Cadastro" asChild>
+        <Button title="Cadastro de itens" />
+      </Link>
       <Link href="/CEP" asChild>
         <Button title="CEP" />
       </Link>
