@@ -14,6 +14,9 @@ export default function Home() {
       <Link href="/CEP" asChild>
         <Button title="CEP" />
       </Link>
+      <Link href="/Jogos" asChild>
+        <Button title="Jogos" />
+      </Link>
     </View>
   );
 }
