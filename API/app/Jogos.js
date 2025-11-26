@@ -8,7 +8,7 @@ export default function App() {
   const [slug, setSlug] = useState('');
   const [descricao, setDescricao] = useState('');
   const [preco, setPreco] = useState('');
-  
+
   const [jogos, setJogos] = useState([]);
   const [textoBusca, setTextoBusca] = useState('');
   const [idEditando, setIdEditando] = useState(null);
@@ -33,7 +33,7 @@ export default function App() {
 
     const precoNumerico = parseFloat(price) || 0;
     const dadosParaEnviar = { title, slug, description, price: precoNumerico };
-    
+
     try {
       const resposta = await fetch("http://177.44.248.50:8080/games", {
         method: "POST",
@@ -55,7 +55,7 @@ export default function App() {
 
     const precoNumerico = parseFloat(price) || 0;
     const dadosParaEnviar = { title, slug, description, price: precoNumerico };
-    
+
     try {
       const resposta = await fetch(`http://177.44.248.50:8080/games/${id}`, {
         method: "PUT",
@@ -89,13 +89,13 @@ export default function App() {
 
   async function buscarJogosPorNome() {
     if (!textoBusca.trim()) {
-      carregarJogos(); 
+      carregarJogos();
       return;
     }
     try {
       const termo = encodeURIComponent(textoBusca);
       const resposta = await fetch(`http://177.44.248.50:8080/games/search?q=${termo}`);
-      
+
       if (resposta.ok) {
         const payload = await resposta.json();
         setJogos(payload);
@@ -135,7 +135,7 @@ export default function App() {
     } else {
       sucesso = await cadastrarJogo(nome, slug, descricao, preco);
     }
-    
+
     if (sucesso) {
       carregarJogos();
       limparFormulario();
@@ -161,16 +161,16 @@ export default function App() {
         ListHeaderComponent={
           <>
             <Text style={estilos.tituloPrincipal}>Game Vault</Text>
-            
+
             <View style={estilos.cartao}>
               <Text style={estilos.titulo}>
                 {idEditando ? `Editando Jogo ID: ${idEditando}` : 'Cadastrar Novo Jogo'}
               </Text>
-              
+
               <TextInput
                 value={nome}
                 onChangeText={setNome}
-                placeholder="Título (ex: Super Mario)"
+                placeholder="Título"
                 placeholderTextColor="#999"
                 style={estilos.campoTexto}
               />
@@ -223,11 +223,11 @@ export default function App() {
                 style={[estilos.campoTexto, { flex: 1, marginBottom: 0 }]}
               />
               <View style={{ marginLeft: 10 }}>
-                 <Button title="Buscar" onPress={buscarJogosPorNome} />
+                <Button title="Buscar" onPress={buscarJogosPorNome} />
               </View>
             </View>
             <Button title="Recarregar Lista Completa" onPress={() => { setTextoBusca(''); carregarJogos(); }} color="#666" />
-            
+
             <Text style={estilos.titulo}>Lista de Jogos</Text>
           </>
         }
@@ -238,7 +238,7 @@ export default function App() {
             <Text style={estilos.itemSlug}>Slug: {item.slug}</Text>
             <Text>Descrição: {item.description || 'Sem descrição'}</Text>
             <Text style={estilos.preco}>Preço: R$ {item.price}</Text>
-            
+
             <View style={estilos.areaBotoesItem}>
               <View style={estilos.botaoItem}>
                 <Button title="Editar" onPress={() => editar(item)} />
@@ -255,7 +255,7 @@ export default function App() {
         )}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 20 }}
-        ListEmptyComponent={<Text style={{textAlign: 'center', marginTop: 20}}>Nenhum jogo encontrado.</Text>}
+        ListEmptyComponent={<Text style={{ textAlign: 'center', marginTop: 20 }}>Nenhum jogo encontrado.</Text>}
       />
     </SafeAreaView>
   );
